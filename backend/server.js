@@ -17,6 +17,12 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// cloudinary.config({ 
+//   cloud_name: 'dyyxbtlfs', 
+//   api_key: '636464113523665', 
+//   api_secret: 'cxb1zAkQtAmPx7P3aJNIwp3dZRI' 
+// });
+
 const server = app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
 });

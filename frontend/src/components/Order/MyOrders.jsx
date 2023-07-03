@@ -106,13 +106,13 @@ const MyOrders = () => {
 
     return (
         <>
-            <MetaData title="My Orders | Flipkart" />
+            <MetaData title="My Orders" />
 
             <MinCategory />
-            <main className="w-full mt-16 sm:mt-0">
+            <main className="w-full mt-20 mb-44">
 
                 {/* <!-- row --> */}
-                <div className="flex gap-3.5 mt-2 sm:mt-6 sm:mx-3 m-auto mb-7">
+                <div className="flex gap-3.5 mt-2 sm:mt-6 m-auto">
 
                     {/* <!-- sidebar column  --> */}
                     <div className="hidden sm:flex flex-col w-1/5 px-1">
@@ -197,7 +197,7 @@ const MyOrders = () => {
                                 {/* <!-- searchbar --> */}
 
                                 {orders && filteredOrders.length === 0 && (
-                                    <div className="flex items-center flex-col gap-2 p-8 bg-white">
+                                    <div className="flex items-center flex-col gap-2 p-8 bg-white mr-4">
                                         <img draggable="false" src="https://rukminim1.flixcart.com/www/100/100/promos/23/08/2020/c5f14d2a-2431-4a36-b6cb-8b5b5e283d4f.png" alt="Empty Orders" />
                                         <span className="text-lg font-medium">Sorry, no results found</span>
                                         <p>Edit search or clear all filters</p>

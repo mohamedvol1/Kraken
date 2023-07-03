@@ -61,8 +61,6 @@ const Sidebar = ({ activeTab }) => {
                 </div>
                 <div className="flex flex-col pb-3 border-b text-sm">
                     <Link to="/account" className={`${activeTab === "profile" ? "bg-blue-50 text-primary-blue font-medium" : "hover:bg-blue-50 hover:text-primary-blue"} p-3 pl-14`}>Profile Information</Link>
-                    <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">Manage Addresses</Link>
-                    <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">PAN Card Information</Link>
                 </div>
                 {/* <!-- account settings tab --> */}
 
@@ -71,22 +69,9 @@ const Sidebar = ({ activeTab }) => {
                     <span className="text-primary-blue"><AccountBalanceWalletIcon /></span>
                     <p className="flex w-full justify-between font-medium text-gray-500">PAYMENTS</p>
                 </div>
-                <div className="flex flex-col pb-3 border-b text-sm">
-                    <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue flex justify-between pr-6" to="/">Gift Cards <span className="font-medium text-primary-green">₹0</span></Link>
-                    <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">Saved UPI</Link>
-                    <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">Saved Cards</Link>
-                </div>
+                
                 {/* <!-- payments tab --> */}
 
-                {/* <!-- my chats tab --> */}
-                <div className="flex items-center gap-5 px-4 py-4 border-b">
-                    <span className="text-primary-blue"><ChatIcon /></span>
-                    <Link className="flex w-full justify-between font-medium text-gray-500 hover:text-primary-blue" to="/">
-                        MY CHATS
-                        <span><ChevronRightIcon /></span>
-                    </Link>
-                </div>
-                {/* <!-- my chats tab --> */}
 
                 {/* <!-- my stuff tab --> */}
                 <div className="flex items-center gap-5 px-4 py-4">
@@ -94,7 +79,6 @@ const Sidebar = ({ activeTab }) => {
                     <p className="flex w-full justify-between font-medium text-gray-500">MY STUFF</p>
                 </div>
                 <div className="flex flex-col pb-3 border-b text-sm">
-                    <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">My Coupons</Link>
                     <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">My Reviews & Ratings</Link>
                     <Link className="p-3 pl-14 hover:bg-blue-50 hover:text-primary-blue" to="/">All Notifications</Link>
                     <Link to="/wishlist" className={`${activeTab === "wishlist" ? "bg-blue-50 text-primary-blue font-medium" : "hover:bg-blue-50 hover:text-primary-blue"} p-3 pl-14`}>My Wishlist</Link>

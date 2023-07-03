@@ -55,24 +55,25 @@ const Payment = () => {
         setPayDisable(true);
 
         try {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            };
+            alert("Done!")
+            // const config = {
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            // };
 
-            const { data } = await axios.post(
-                '/api/v1/payment/process',
-                paymentData,
-                config,
-            );
+            // const { data } = await axios.post(
+            //     '/api/v1/payment/process',
+            //     paymentData,
+            //     config,
+            // );
 
-            let info = {
-                action: "https://securegw-stage.paytm.in/order/process",
-                params: data.paytmParams
-            }
+            // let info = {
+            //     action: "https://securegw-stage.paytm.in/order/process",
+            //     params: data.paytmParams
+            // }
 
-            post(info)
+            // post(info)
 
             // if (!stripe || !elements) return;
 
@@ -130,7 +131,7 @@ const Payment = () => {
 
     return (
         <>
-            <MetaData title="Flipkart: Secure Payment | Paytm" />
+            <MetaData title="Secure Payment | Paytm" />
 
             <main className="w-full mt-20">
 
@@ -163,7 +164,7 @@ const Payment = () => {
                                         </RadioGroup>
                                     </FormControl>
 
-                                    <input type="submit" value={`Pay ₹${totalPrice.toLocaleString()}`} disabled={payDisable ? true : false} className={`${payDisable ? "bg-primary-grey cursor-not-allowed" : "bg-primary-orange cursor-pointer"} w-1/2 sm:w-1/4 my-2 py-3 font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none`} />
+                                    <input type="submit" value={`Pay $${totalPrice.toLocaleString()}`} disabled={payDisable ? true : false} className={`${payDisable ? "bg-primary-grey cursor-not-allowed" : "bg-primary-orange cursor-pointer"} w-1/2 sm:w-1/4 my-2 py-3 font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none`} />
 
                                 </form>
 

@@ -11,7 +11,7 @@ import { useSnackbar } from 'notistack';
 import { saveShippingInfo } from '../../actions/cartAction';
 import { useNavigate } from 'react-router-dom';
 import MetaData from '../Layouts/MetaData';
-import states from '../../utils/states';
+// import states from '../../utils/states';
 
 const Shipping = () => {
 
@@ -32,18 +32,14 @@ const Shipping = () => {
     const shippingSubmit = (e) => {
         e.preventDefault();
 
-        if (phoneNo.length < 10 || phoneNo.length > 10) {
-            enqueueSnackbar("Invalid Phone Number", { variant: "error" });
-            return;
-        }
         dispatch(saveShippingInfo({ address, city, country, state, pincode, phoneNo }));
         navigate("/order/confirm");
     }
 
     return (
         <>
-            <MetaData title="Flipkart: Shipping Details" />
-            <main className="w-full mt-20">
+            <MetaData title="Shipping Details" />
+            <main className="w-full mt-28">
 
                 {/* <!-- row --> */}
                 <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 mt-0 sm:mt-4 m-auto sm:mb-7 overflow-hidden">
@@ -114,29 +110,12 @@ const Shipping = () => {
                                                 label="Country"
                                                 // onChange={(e) => setCountry(e.target.value)}
                                             >
-                                                <MenuItem value={'IN'}>India</MenuItem>
+                                                <MenuItem value={'IN'}>Egypt</MenuItem>
                                             </Select>
                                         </FormControl>
-
-                                        <FormControl fullWidth disabled={country ? false : true}>
-                                            <InputLabel id="state-select">State</InputLabel>
-                                            <Select
-                                                labelId="state-select"
-                                                id="state-select"
-                                                value={state}
-                                                label="State"
-                                                onChange={(e) => setState(e.target.value)}
-                                                required
-                                            >
-                                                {states.map((item) => (
-                                                    <MenuItem key={item.code} value={item.code}>{item.name}</MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-
                                     </div>
 
-                                    <button type="submit" className="bg-primary-orange w-full sm:w-1/3 my-2 py-3.5 text-sm font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none">save and deliver here</button>
+                                    <button type="submit" className="bg-black w-full sm:w-1/3 my-2 py-3.5 text-sm font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none">save and deliver here</button>
                                 </form>
                             </div>
                         </Stepper>

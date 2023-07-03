@@ -1,19 +1,19 @@
-import mobiles from '../../assets/images/Categories/phone.png';
+// import mobiles from '../../assets/images/Categories/phone.png';
 import fashion from '../../assets/images/Categories/fashion.png';
 import electronics from '../../assets/images/Categories/electronics.png';
 import home from '../../assets/images/Categories/home.png';
-import travel from '../../assets/images/Categories/travel.png';
-import appliances from '../../assets/images/Categories/appliances.png';
+// import travel from '../../assets/images/Categories/travel.png';
+// import appliances from '../../assets/images/Categories/appliances.png';
 import furniture from '../../assets/images/Categories/furniture.png';
 import beauty from '../../assets/images/Categories/beauty.png';
-import grocery from '../../assets/images/Categories/grocery.png';
+// import grocery from '../../assets/images/Categories/grocery.png';
 import { Link } from 'react-router-dom';
 
 const catNav = [
-    {
-        name: "Mobiles",
-        icon: mobiles,
-    },
+    // {
+    //     name: "Mobiles",
+    //     icon: mobiles,
+    // },
     {
         name: "Fashion",
         icon: fashion,
@@ -26,14 +26,14 @@ const catNav = [
         name: "Home",
         icon: home,
     },
-    {
-        name: "Travel",
-        icon: travel,
-    },
-    {
-        name: "Appliances",
-        icon: appliances,
-    },
+    // {
+    //     name: "Travel",
+    //     icon: travel,
+    // },
+    // {
+    //     name: "Appliances",
+    //     icon: appliances,
+    // },
     {
         name: "Furniture",
         icon: furniture,
@@ -41,16 +41,16 @@ const catNav = [
     {
         name: "Beauty,Toys & more",
         icon: beauty,
-    },
-    {
-        name: "Grocery",
-        icon: grocery,
-    },
+    }
+    // {
+    //     name: "Grocery",
+    //     icon: grocery,
+    // },
 ]
 
 const Categories = () => {
     return (
-        <section className="hidden sm:block bg-white mt-10 mb-4 min-w-full px-12 py-1 shadow overflow-hidden">
+        <section className="hidden sm:block bg-white mt-24 mb-4 min-w-full px-12 py-1 shadow overflow-hidden">
 
             <div className="flex items-center justify-between mt-4">
 
