@@ -1,16 +1,16 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PriceSidebar from './PriceSidebar';
 import Stepper from './Stepper';
-// import {
-//     CardNumberElement,
-//     CardCvcElement,
-//     CardExpiryElement,
-//     useStripe,
-//     useElements,
-// } from '@stripe/react-stripe-js';
-import { clearErrors } from '../../actions/orderAction';
+import {
+    CardNumberElement,
+    CardCvcElement,
+    CardExpiryElement,
+    useStripe,
+    useElements,
+} from '@stripe/react-stripe-js';
+import { clearErrors, newOrder } from '../../actions/orderAction';
 import { useSnackbar } from 'notistack';
 import { post } from '../../utils/paytmForm';
 import FormControl from '@mui/material/FormControl';
@@ -18,15 +18,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import MetaData from '../Layouts/MetaData';
+import StripeCheckoutButton from './StripeButton';
+import {Elements} from '@stripe/react-stripe-js';
+import { emptyCart } from '../../actions/cartAction';
+import { useNavigate } from 'react-router-dom';
+// import { config } from 'dotenv';
 
-const Payment = () => {
+const Payment = (props) => {
 
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    // const stripe = useStripe();
-    // const elements = useElements();
-    // const paymentBtn = useRef(null);
+    const stripe = useStripe();
+    const elements = useElements();
+    const paymentBtn = useRef(null);
 
     const [payDisable, setPayDisable] = useState(false);
 
@@ -37,36 +42,45 @@ const Payment = () => {
     const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
     const paymentData = {
-        amount: Math.round(totalPrice),
+        amount: Math.round(totalPrice) *100,
         email: user.email,
         phoneNo: shippingInfo.phoneNo,
     };
 
-    // const order = {
-    //     shippingInfo,
-    //     orderItems: cartItems,
-    //     totalPrice,
-    // }
+    const order = {
+        shippingInfo,
+        orderItems: cartItems,
+        totalPrice,
+    }
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        // paymentBtn.current.disabled = true;
-        setPayDisable(true);
+        console.log('submit >>>>>>')
+
+        paymentBtn.current.disabled = true;
+        // setPayDisable(true);
 
         try {
-            alert("Done!")
-            // const config = {
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            // };
+            // alert("Done!")
+            console.log('start >>>>>>')
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            };
 
-            // const { data } = await axios.post(
-            //     '/api/v1/payment/process',
-            //     paymentData,
-            //     config,
-            // );
+            console.log('process >>>>>>')
+
+            const { data } = await axios.post(
+                '/api/v1/payment/process',
+                paymentData,
+                config,
+            );
+
+            console.log('data >>', data)
+
+            console.log('payment done >>>>>>')
 
             // let info = {
             //     action: "https://securegw-stage.paytm.in/order/process",
@@ -75,44 +89,50 @@ const Payment = () => {
 
             // post(info)
 
-            // if (!stripe || !elements) return;
+            console.log('before >>>>>>')
 
-            // const result = await stripe.confirmCardPayment(client_secret, {
-            //     payment_method: {
-            //         card: elements.getElement(CardNumberElement),
-            //         billing_details: {
-            //             name: user.name,
-            //             email: user.email,
-            //             address: {
-            //                 line1: shippingInfo.address,
-            //                 city: shippingInfo.city,
-            //                 country: shippingInfo.country,
-            //                 state: shippingInfo.state,
-            //                 postal_code: shippingInfo.pincode,
-            //             },
-            //         },
-            //     },
-            // });
+            if (!stripe || !elements) return;
 
-            // if (result.error) {
-            //     paymentBtn.current.disabled = false;
-            //     enqueueSnackbar(result.error.message, { variant: "error" });
-            // } else {
-            //     if (result.paymentIntent.status === "succeeded") {
+            console.log('after >>>>>>')
 
-            //         order.paymentInfo = {
-            //             id: result.paymentIntent.id,
-            //             status: result.paymentIntent.status,
-            //         };
+            console.log('shippppppp', shippingInfo)
 
-            //         dispatch(newOrder(order));
-            //         dispatch(emptyCart());
+            const result = await stripe.confirmCardPayment(data.client_secret, {
+                payment_method: {
+                    card: elements.getElement(CardNumberElement),
+                    billing_details: {
+                        name: user.name,
+                        email: user.email,
+                        address: {
+                            line1: shippingInfo.address,
+                            city: shippingInfo.city,
+                            country: shippingInfo.country,
+                            state: 'egypt',
+                            postal_code: shippingInfo.pincode,
+                        },
+                    },
+                },
+            });
 
-            //         navigate("/order/success");
-            //     } else {
-            //         enqueueSnackbar("Processing Payment Failed!", { variant: "error" });
-            //     }
-            // }
+            if (result.error) {
+                paymentBtn.current.disabled = false;
+                enqueueSnackbar(result.error.message, { variant: "error" });
+            } else {
+                if (result.paymentIntent.status === "succeeded") {
+
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status,
+                    };
+
+                    dispatch(newOrder(order));
+                    dispatch(emptyCart());
+
+                    navigate("/order/success");
+                } else {
+                    enqueueSnackbar("Processing Payment Failed!", { variant: "error" });
+                }
+            }
 
         } catch (error) {
             // paymentBtn.current.disabled = false;
@@ -167,9 +187,9 @@ const Payment = () => {
                                     <input type="submit" value={`Pay $${totalPrice.toLocaleString()}`} disabled={payDisable ? true : false} className={`${payDisable ? "bg-primary-grey cursor-not-allowed" : "bg-primary-orange cursor-pointer"} w-1/2 sm:w-1/4 my-2 py-3 font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none`} />
 
                                 </form>
-
+                            
                                 {/* stripe form */}
-                                {/* <form onSubmit={(e) => submitHandler(e)} autoComplete="off" className="flex flex-col justify-start gap-3 w-full sm:w-3/4 mx-8 my-4">
+                                <form onSubmit={(e) => submitHandler(e)} autoComplete="off" className="flex flex-col justify-start gap-3 w-full sm:w-3/4 mx-8 my-4">
                                 <div>
                                     <CardNumberElement />
                                 </div>
@@ -180,8 +200,17 @@ const Payment = () => {
                                     <CardCvcElement />
                                 </div>
                                 <input ref={paymentBtn} type="submit" value="Pay" className="bg-primary-orange w-full sm:w-1/3 my-2 py-3.5 text-sm font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none cursor-pointer" />
-                            </form> */}
+                            </form>
                                 {/* stripe form */}
+                                <StripeCheckoutButton  
+                                    price={totalPrice.toLocaleString()} 
+                                    paymentData={paymentData} 
+                                    config={{
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        }
+                                    }} 
+                                />
 
                             </div>
                         </Stepper>

@@ -25,7 +25,7 @@ const Shipping = () => {
     const [address, setAddress] = useState(shippingInfo.address);
     const [city, setCity] = useState(shippingInfo.city);
     const [country, setCountry] = useState('IN');
-    const [state, setState] = useState(shippingInfo.state);
+    const [state, setState] = useState('None');
     const [pincode, setPincode] = useState(shippingInfo.pincode);
     const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
 
@@ -105,12 +105,12 @@ const Shipping = () => {
                                             <Select
                                                 labelId="country-select"
                                                 id="country-select"
-                                                defaultValue={country}
+                                                defaultValue={'egypt'}
                                                 disabled
                                                 label="Country"
                                                 // onChange={(e) => setCountry(e.target.value)}
                                             >
-                                                <MenuItem value={'IN'}>Egypt</MenuItem>
+                                                <MenuItem value={'egypt'}>Egypt</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </div>

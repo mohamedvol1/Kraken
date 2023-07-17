@@ -7,12 +7,16 @@ const sendEmail = require('../utils/sendEmail');
 // Create New Order
 exports.newOrder = asyncErrorHandler(async (req, res, next) => {
 
+    
+
+    console.log('wwwww', req.body)
     const {
         shippingInfo,
         orderItems,
         paymentInfo,
         totalPrice,
     } = req.body;
+
 
     const orderExist = await Order.findOne({ paymentInfo });
 
@@ -40,6 +44,8 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
             oid: order._id,
         }
     });
+
+    console.log('kkkkkkkkkkkkkkkkk')
 
     res.status(201).json({
         success: true,
